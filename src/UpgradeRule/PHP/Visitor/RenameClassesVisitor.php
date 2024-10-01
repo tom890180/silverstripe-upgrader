@@ -312,6 +312,11 @@ class RenameClassesVisitor extends NodeVisitorAbstract
             return false;
         }
 
+        // Validate that node doesn't have @skipUpgradeLine in a comment directly above only
+        if ($this->detectSkipUpgradeLineOnly($node)) {
+            return false;
+        }
+
         return true;
     }
 
