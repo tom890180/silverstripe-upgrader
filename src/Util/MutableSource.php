@@ -8,6 +8,7 @@ use PhpParser\Node\Stmt\Use_;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter;
 use PhpParser\Node;
+use PhpParser\PhpVersion;
 use PhpParser\PrettyPrinterAbstract;
 
 /**
@@ -38,10 +39,9 @@ class MutableSource
         $this->source = new MutableString($source);
         $this->prettyPrinter = new PrettyPrinter\Standard();
 
-        $lexer = new Lexer\Emulative([
-            'usedAttributes' => ['comments', 'startFilePos', 'endFilePos', 'startLine', 'endLine']
-        ]);
-        $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP5, $lexer);
+        $phpVersion = PhpVersion::getHostVersion();
+        $parser = (new ParserFactory())->createForVersion($phpVersion);
+        
         $this->ast = $parser->parse($source);
     }
 
