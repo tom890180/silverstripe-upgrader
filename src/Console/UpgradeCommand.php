@@ -74,6 +74,9 @@ class UpgradeCommand extends AbstractCommand implements AutomatedCommand
         $rules = $this->getRules($input, $output);
         $rootPath = $this->getRootPath($input);
         $config = $this->getConfig($rootPath);
+
+        $config['fileExtensions'] = ['php', 'ss', 'yml'];
+
         foreach ($rules as $rule) {
             $spec->addRule($rule->withParameters($config));
         }
