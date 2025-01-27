@@ -124,14 +124,14 @@ class ClassQualifierVisitor extends NameResolver
      * @param Node\Name $node
      * @return Node\Name
      */
-    protected function resolveClassName(Node\Name $node): Node\Name
+    protected function resolveClassName(Node\Name $node)
     {
         // Follow core name resolver to fully qualify this name
         $node = parent::resolveClassName($node);
 
         // Record alias for un-namespaced classes
         /** @var Node\Name $node */
-        if (count($node->getParts()) === 1) {
+        if (count($node->parts) === 1) {
             $name = $node->toString();
 
             // If this class is declared in this file, then don't alias,
@@ -143,9 +143,9 @@ class ClassQualifierVisitor extends NameResolver
         }
 
         // Remove redundant aliases for classes in the same namespace
-        if (count($node->getParts()) > 1) {
+        if (count($node->parts) > 1) {
             // Check namespace for this item
-            $parts = $node->getParts();
+            $parts = $node->parts;
             $className = array_pop($parts);
             $namespace = implode('\\', $parts);
 
